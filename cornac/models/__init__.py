@@ -25,8 +25,6 @@ from .c2pf import C2PF
 from .cdl import CDL
 from .cdr import CDR
 from .coe import COE
-from .comparer import ComparERObj
-from .comparer import ComparERSub
 from .conv_mf import ConvMF
 from .ctr import CTR
 from .cvae import CVAE
@@ -67,4 +65,3 @@ except ModuleNotFoundError:
         "FM model is only supported on Linux.\n"
         + "Windows executable can be found at http://www.libfm.org."
     )
-

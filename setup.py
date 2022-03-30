@@ -149,7 +149,10 @@ extensions = [
     ),
     Extension(
         "cornac.models.hpf.hpf",
-        sources=["cornac/models/hpf/cython/hpf" + ext, "cornac/models/hpf/cpp/cpp_hpf.cpp",],
+        sources=[
+            "cornac/models/hpf/cython/hpf" + ext,
+            "cornac/models/hpf/cpp/cpp_hpf.cpp",
+        ],
         include_dirs=[
             "cornac/models/hpf/cpp/",
             "cornac/utils/external/eigen/Eigen",
@@ -180,12 +183,6 @@ extensions = [
         language="c++",
     ),
     Extension(
-        name="cornac.models.comparer.recom_comparer_obj",
-        sources=["cornac/models/comparer/recom_comparer_obj" + ext],
-        include_dirs=[np.get_include()],
-        language="c++",
-    ),
-    Extension(
         name="cornac.models.bpr.recom_bpr",
         sources=["cornac/models/bpr/recom_bpr" + ext],
         include_dirs=[np.get_include(), "cornac/utils/external"],
@@ -212,14 +209,6 @@ extensions = [
     Extension(
         name="cornac.models.mter.recom_mter",
         sources=["cornac/models/mter/recom_mter" + ext],
-        include_dirs=[np.get_include(), "cornac/utils/external"],
-        language="c++",
-        extra_compile_args=compile_args,
-        extra_link_args=link_args,
-    ),
-    Extension(
-        name="cornac.models.comparer.recom_comparer_sub",
-        sources=["cornac/models/comparer/recom_comparer_sub" + ext],
         include_dirs=[np.get_include(), "cornac/utils/external"],
         language="c++",
         extra_compile_args=compile_args,
