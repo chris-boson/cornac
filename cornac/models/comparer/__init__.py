@@ -13,5 +13,3 @@
 # limitations under the License.
 # ============================================================================
 
-from .recom_comparer_sub import ComparERSub
-from .recom_comparer_obj import ComparERObj
