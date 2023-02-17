@@ -29,25 +29,8 @@ Release instruction:
 """
 
 
-try:
-    import numpy as np
-except ImportError:
-    exit("Please install numpy>=1.14 first.")
-
-try:
-    from Cython.Build import cythonize
-    from Cython.Distutils import build_ext
-except ImportError:
-    USE_CYTHON = False
-else:
-    USE_CYTHON = True
-
-
 with open("README.md", "r") as fh:
     long_description = fh.read()
-
-
-USE_OPENMP = True
 
 
 cmdclass = {}
