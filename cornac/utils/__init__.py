@@ -13,16 +13,7 @@
 # limitations under the License.
 # ============================================================================
 
-from .common import validate_format
-from .common import estimate_batches
-from .common import get_rng
+from .common import estimate_batches, get_rng, normalize, validate_format
 from .download import cache
-from .fast_dot import fast_dot
-from .common import normalize
 
-__all__ = ['validate_format',
-           'estimate_batches',
-           'get_rng',
-           'cache',
-           'fast_dot',
-           'normalize']
+__all__ = ["validate_format", "estimate_batches", "get_rng", "cache", "normalize"]

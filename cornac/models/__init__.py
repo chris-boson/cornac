@@ -14,49 +14,7 @@
 # ============================================================================
 
 from .recommender import Recommender
-
-from .amr import AMR
-from .baseline_only import BaselineOnly
-from .bivaecf import BiVAECF
-from .bpr import BPR
-from .bpr import WBPR
-from .causalrec import CausalRec
-from .c2pf import C2PF
-from .cdl import CDL
-from .cdr import CDR
-from .coe import COE
-from .conv_mf import ConvMF
-from .ctr import CTR
-from .cvae import CVAE
-from .cvaecf import CVAECF
-from .efm import EFM
-from .global_avg import GlobalAvg
-from .hft import HFT
-from .hpf import HPF
-from .ibpr import IBPR
-from .knn import ItemKNN
-from .knn import UserKNN
-from .mcf import MCF
-from .mf import MF
-from .mmmf import MMMF
-from .most_pop import MostPop
-from .mter import MTER
-from .narre import NARRE
-from .ncf import GMF
-from .ncf import MLP
-from .ncf import NeuMF
-from .nmf import NMF
-from .online_ibpr import OnlineIBPR
-from .pcrl import PCRL
-from .pmf import PMF
-from .sbpr import SBPR
-from .skm import SKMeans
-from .sorec import SoRec
-from .svd import SVD
 from .vaecf import VAECF
-from .vbpr import VBPR
-from .vmf import VMF
-from .wmf import WMF
 
 try:
     from .fm import FM

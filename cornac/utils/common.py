@@ -18,17 +18,12 @@ import numbers
 import numpy as np
 import scipy.sparse as sp
 
-from .fast_sparse_funcs import (
-    inplace_csr_row_normalize_l1,
-    inplace_csr_row_normalize_l2
-)
-
 FLOAT_DTYPES = (np.float64, np.float32, np.float16)
 
 
 def sigmoid(x):
     """Sigmoid function"""
-    return 1. / (1. + np.exp(-x))
+    return 1.0 / (1.0 + np.exp(-x))
 
 
 def scale(values, target_min, target_max, source_min=None, source_max=None):
@@ -96,8 +91,7 @@ def clip(values, lower_bound, upper_bound):
 
 
 def intersects(x, y, assume_unique=False):
-    """Return the intersection of given two arrays
-    """
+    """Return the intersection of given two arrays"""
     mask = np.in1d(x, y, assume_unique=assume_unique)
     x_intersects_y = x[mask]
 
@@ -105,8 +99,7 @@ def intersects(x, y, assume_unique=False):
 
 
 def excepts(x, y, assume_unique=False):
-    """Removing elements in array y from array x
-    """
+    """Removing elements in array y from array x"""
     mask = np.in1d(x, y, assume_unique=assume_unique, invert=True)
     x_excepts_y = x[mask]
 
@@ -131,8 +124,7 @@ def safe_indexing(X, indices):
         Subset of X on first axis
     """
     if hasattr(X, "shape"):
-        if hasattr(X, 'take') and (hasattr(indices, 'dtype') and
-                                   indices.dtype.kind == 'i'):
+        if hasattr(X, "take") and (hasattr(indices, "dtype") and indices.dtype.kind == "i"):
             # This is often substantially faster than X[indices]
             return X.take(indices, axis=0)
         else:
@@ -146,7 +138,9 @@ def validate_format(input_format, valid_formats):
     :raise ValueError if not supported
     """
     if not input_format in valid_formats:
-        raise ValueError('{} data format is not in valid formats ({})'.format(input_format, valid_formats))
+        raise ValueError(
+            "{} data format is not in valid formats ({})".format(input_format, valid_formats)
+        )
 
     return input_format
 
@@ -159,21 +153,21 @@ def estimate_batches(input_size, batch_size):
 
 
 def get_rng(seed):
-    '''Return a RandomState of Numpy.
+    """Return a RandomState of Numpy.
     If seed is None, use RandomState singleton from numpy.
     If seed is an integer, create a RandomState from that seed.
     If seed is already a RandomState, just return it.
-    '''
+    """
     if seed is None:
         return np.random.mtrand._rand
     if isinstance(seed, (numbers.Integral, np.integer)):
         return np.random.RandomState(seed)
     if isinstance(seed, np.random.RandomState):
         return seed
-    raise ValueError('{} can not be used to create a numpy.random.RandomState'.format(seed))
+    raise ValueError("{} can not be used to create a numpy.random.RandomState".format(seed))
 
 
-def normalize(X, norm='l2', axis=1, copy=True):
+def normalize(X, norm="l2", axis=1, copy=True):
     """Scale input vectors individually to unit norm (vector length).
 
     Parameters
@@ -195,13 +189,13 @@ def normalize(X, norm='l2', axis=1, copy=True):
         set to False to perform inplace row normalization and avoid a
         copy (if the input is already a numpy array or a scipy.sparse
         CSR matrix and if axis is 1).
-        
+
     Reference
     ---------
     https://github.com/scikit-learn/scikit-learn/blob/1495f69242646d239d89a5713982946b8ffcf9d9/sklearn/preprocessing/data.py#L1553
 
     """
-    if norm not in ('l1', 'l2', 'max'):
+    if norm not in ("l1", "l2", "max"):
         raise ValueError("'%s' is not a supported norm" % norm)
 
     if len(X.shape) != 2:
@@ -216,23 +210,23 @@ def normalize(X, norm='l2', axis=1, copy=True):
     if sp.issparse(X_out):
         X_out = X_out.tocsr()
 
-        if norm == 'l1':
+        if norm == "l1":
             inplace_csr_row_normalize_l1(X_out)
-        elif norm == 'l2':
+        elif norm == "l2":
             inplace_csr_row_normalize_l2(X_out)
-        elif norm == 'max':
+        elif norm == "max":
             norms = X_out.max(axis=1).A
             norms_elementwise = norms.repeat(np.diff(X_out.indptr))
             mask = norms_elementwise != 0
             X_out.data[mask] /= norms_elementwise[mask]
     else:
-        if norm == 'l1':
+        if norm == "l1":
             norms = np.abs(X_out).sum(axis=1)
-        elif norm == 'l2':
-            norms = np.sqrt((X_out ** 2).sum(axis=1))
-        elif norm == 'max':
+        elif norm == "l2":
+            norms = np.sqrt((X_out**2).sum(axis=1))
+        elif norm == "max":
             norms = np.max(X_out, axis=1)
-        norms[norms == 0] = 1.
+        norms[norms == 0] = 1.0
         X_out /= norms.reshape(-1, 1)
 
     if axis == 0:
